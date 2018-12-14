@@ -182,6 +182,37 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
     }
     
+    // MARK: - Persistence: Saving and Loading
+    lazy var mapSaveURL: URL = {
+        do {
+            return try FileManager.default
+                .url(for: .documentDirectory,
+                     in: .userDomainMask,
+                     appropriateFor: nil,
+                     create: true)
+                .appendingPathComponent("map.arexperience")
+        } catch {
+            fatalError("Can't get file save URL: \(error.localizedDescription)")
+        }
+    }()
+    
+    @IBAction func saveExperience(_ sender: UIButton) {
+        arSceneView.session.getCurrentWorldMap { worldMap, error in
+            guard let map = worldMap
+                else { self.showAlert(title: "Can't get current world map", message: error!.localizedDescription);
+                    return }
+            
+            do {
+                let data = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                try data.write(to: self.mapSaveURL, options: [.atomic])
+                DispatchQueue.main.async {
+                    // Show the load experience button now
+                }
+            } catch {
+                fatalError("Can't save map: \(error.localizedDescription)")
+            }
+        }
+    }
     
     // Mark: - ARManager Delegate
     /**
