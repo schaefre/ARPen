@@ -292,5 +292,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.pluginManager.button(.Button1, pressed: false)
     }
     
+    @IBAction func ARSceneViewTapped(_ sender:UITapGestureRecognizer) {
+        let cubeNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+        cubeNode.position = SCNVector3(0, 0, -0.2) // SceneKit/AR coordinates are in meters
+        arSceneView.scene.rootNode.addChildNode(cubeNode)
+    }
     
 }

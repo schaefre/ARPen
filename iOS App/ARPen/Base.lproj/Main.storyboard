@@ -20,6 +20,9 @@
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1i-B5-dqO">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="dep-HF-b4t" appends="YES" id="Ccf-E7-ILK"/>
+                                </connections>
                             </arscnView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGF-H0-N2c">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="317"/>
@@ -200,6 +203,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="dep-HF-b4t">
+                    <connections>
+                        <action selector="ARSceneViewTapped:" destination="BV1-FR-VrT" id="WuX-qZ-gwp"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="225.33733133433284" y="16.800000000000001"/>
         </scene>
