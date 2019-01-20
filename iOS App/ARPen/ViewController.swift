@@ -44,8 +44,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Create a new scene
-        let scene = PenScene(named: "art.scnassets/ship.scn")!
+        // Create a new empty scene
+        let scene = PenScene()
         scene.markerBox = MarkerBox()
         self.arSceneView.pointOfView?.addChildNode(scene.markerBox)
         
@@ -55,9 +55,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
         self.arSceneView.autoenablesDefaultLighting = true
         self.arSceneView.pointOfView?.name = "iDevice Camera"
+        self.arSceneView.debugOptions = [ .showFeaturePoints ]
         
         // Set the scene to the view
-        arSceneView.scene = scene
+        self.arSceneView.scene = scene
+        
+        virtualObjectAnchor = nil
         
         setupPluginMenu()
         activatePlugin(withID: currentActivePluginID)
