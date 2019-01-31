@@ -26,6 +26,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBOutlet var arSceneView: ARSCNView!
     @IBOutlet weak var pluginMenuScrollView: UIScrollView!
     
+    @IBOutlet weak var saveExperienceButton: UIButton!
+    @IBOutlet weak var loadExperienceButton: UIButton!
+    @IBOutlet weak var instructionsLabel: UILabel!
+    @IBOutlet weak var snapshotThumbnail: UIImageView!
+    
     let menuButtonHeight = 70
     let menuButtonPadding = 5
     var currentActivePluginID = 1
@@ -70,6 +75,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             appDelegate.userStudyRecordManager = self.userStudyRecordManager
         } else {
             print("Record manager was not set up in App Delegate")
+        
+        // Read in any already saved map to see if it can be loaded
+        if mapDataFromFile != nil {
+            self.loadExperienceButton.isHidden = false
         }
     }
     
@@ -79,11 +88,24 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Check if ARKit is available on the device; display error if not
+        guard ARWorldTrackingConfiguration.isSupported else {
+            fatalError("""
+                ARKit is not available on this device. For apps that require ARKit
+                for core functionality, use the `arkit` key in the key in the
+                `UIRequiredDeviceCapabilities` section of the Info.plist to prevent
+                the app from installing. (If the app can't be installed, this error
+                can't be triggered in a production scenario.)
+                In apps where AR is an additive feature, use `isSupported` to
+                determine whether to show UI for launching AR experiences.
+            """) // For details, see https://developer.apple.com/documentation/arkit
+        }
+        
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
 
         // Run the view's session
-        arSceneView.session.run(configuration)
+        self.arSceneView.session.run(configuration)
         
         // Hide navigation bar
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -93,7 +115,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         super.viewWillDisappear(animated)
         
         // Pause the view's session
-        arSceneView.session.pause()
+        self.arSceneView.session.pause()
         
         // Show navigation bar
         self.navigationController?.setNavigationBarHidden(false, animated: true)
