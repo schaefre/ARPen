@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -60,11 +59,34 @@
                                     <constraint firstAttribute="height" constant="38" id="fHE-N5-7FY"/>
                                     <constraint firstAttribute="width" constant="38" id="kYJ-Zt-hi4"/>
                                 </constraints>
-                                <state key="normal" image="SaveExperience"/>
+                                <state key="normal" image="SaveModel"/>
                                 <connections>
                                     <action selector="saveExperience:" destination="BV1-FR-VrT" eventType="touchUpInside" id="C1Z-cV-hWf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eN-xr-Mph" userLabel="LoadMapButton">
+                                <rect key="frame" x="619" y="233" width="38" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="Ipo-qs-NuQ"/>
+                                    <constraint firstAttribute="width" constant="38" id="YXK-Tr-Ipn"/>
+                                </constraints>
+                                <state key="normal" image="LoadModel"/>
+                                <connections>
+                                    <action selector="loadExperience:" destination="BV1-FR-VrT" eventType="touchUpInside" id="jqv-bB-ELd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Test]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tmA-fo-B07">
+                                <rect key="frame" x="317" y="340.5" width="33.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tcv-GO-7VL">
+                                <rect key="frame" x="407" y="20" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="LWp-NE-RUj"/>
+                                </constraints>
+                            </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYd-yH-V3o">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YXb-VB-vP4">
@@ -168,12 +190,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Tcv-GO-7VL" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" constant="20" symbolic="YES" id="1cz-0w-nhO"/>
+                            <constraint firstItem="EB1-VF-Kd4" firstAttribute="top" secondItem="6eN-xr-Mph" secondAttribute="bottom" constant="8" symbolic="YES" id="2Ug-0p-fcK"/>
                             <constraint firstItem="7vt-XS-Ox1" firstAttribute="bottom" secondItem="EIQ-Ip-Tyt" secondAttribute="bottom" constant="-8" id="3xJ-ZG-fuI"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="4R4-hk-6Gk"/>
+                            <constraint firstAttribute="bottom" secondItem="tmA-fo-B07" secondAttribute="bottom" constant="20" symbolic="YES" id="4kB-Ph-xUG"/>
+                            <constraint firstItem="6eN-xr-Mph" firstAttribute="leading" secondItem="EB1-VF-Kd4" secondAttribute="leading" id="7Dd-I4-Vrt"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="leading" secondItem="YSQ-pH-N6L" secondAttribute="leading" id="96J-6E-dhy"/>
+                            <constraint firstItem="Tcv-GO-7VL" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailingMargin" id="AGg-Ry-Luc"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="A5z-U4-mJN" secondAttribute="trailing" constant="10" id="CMI-vn-wNc"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="DLC-mq-LKi"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="LBk-3V-d3Y"/>
+                            <constraint firstItem="6eN-xr-Mph" firstAttribute="top" secondItem="Tcv-GO-7VL" secondAttribute="bottom" constant="85" id="PV9-Nu-XH5"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="QDe-OA-GDZ"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="A5z-U4-mJN" secondAttribute="bottom" constant="10" id="QsW-2Q-MbL"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailing" id="Un0-kz-gbv"/>
@@ -183,10 +211,16 @@
                             <constraint firstItem="7vt-XS-Ox1" firstAttribute="centerX" secondItem="gGF-H0-N2c" secondAttribute="centerX" id="a5d-Br-ozq"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="cqj-y5-Wso"/>
                             <constraint firstItem="7vt-XS-Ox1" firstAttribute="top" secondItem="gGF-H0-N2c" secondAttribute="bottom" constant="10" id="dhI-aX-jWv"/>
+                            <constraint firstItem="tmA-fo-B07" firstAttribute="centerX" secondItem="Z1i-B5-dqO" secondAttribute="centerX" id="f3b-3H-wuk"/>
                             <constraint firstItem="A5z-U4-mJN" firstAttribute="top" secondItem="EB1-VF-Kd4" secondAttribute="bottom" constant="10" id="p67-lP-t7d"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="EB1-VF-Kd4" secondAttribute="trailing" constant="10" id="xh7-vy-qs8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EIQ-Ip-Tyt"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="iYd-yH-V3o"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="6Ro-dD-aza"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -198,7 +232,11 @@
                         <outlet property="arPenImage" destination="Z1N-qB-Uok" id="Ffr-Fr-nlm"/>
                         <outlet property="arPenLabel" destination="4kR-hm-tXz" id="WxC-sC-hY1"/>
                         <outlet property="arSceneView" destination="Z1i-B5-dqO" id="iVk-um-itv"/>
+                        <outlet property="instructionsLabel" destination="tmA-fo-B07" id="AoY-4v-bnV"/>
+                        <outlet property="loadExperienceButton" destination="6eN-xr-Mph" id="DLC-fW-4gJ"/>
                         <outlet property="pluginMenuScrollView" destination="gGF-H0-N2c" id="VX1-TR-Ghh"/>
+                        <outlet property="saveExperienceButton" destination="EB1-VF-Kd4" id="5cd-zv-C6p"/>
+                        <outlet property="snapshotThumbnail" destination="Tcv-GO-7VL" id="Xtv-zi-FVS"/>
                         <outlet property="visualEffectView" destination="iYd-yH-V3o" id="9t5-aF-3w7"/>
                     </connections>
                 </viewController>
@@ -717,7 +755,8 @@
     </scenes>
     <resources>
         <image name="Checkmark" width="37" height="37"/>
-        <image name="SaveExperience" width="512" height="512"/>
+        <image name="LoadModel" width="65.279998779296875" height="55.919998168945312"/>
+        <image name="SaveModel" width="65.279998779296875" height="55.439998626708984"/>
         <image name="SoftwareButton" width="434.39999389648438" height="434.39999389648438"/>
         <image name="cog" width="128" height="128"/>
     </resources>
