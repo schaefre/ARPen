@@ -314,6 +314,44 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     }
     
     // Mark: - ARManager Delegate
+    
+    @IBAction func ARSceneViewTapped(_ sender:UITapGestureRecognizer) {
+        print("Handling tap gesture")
+        // Disable placing objects when the session is still relocalizing
+        if isRelocalizingMap && virtualObjectAnchor == nil {
+            print("isRelocalizingMap && virtualObjectAnchor == nil")
+            return
+        }
+        // Hit test to find a place for a virtual object.
+        guard let hitTestResult = arSceneView
+            .hitTest(sender.location(in: arSceneView), types: [.featurePoint])
+            .first
+            else {
+                print("Can't find a hit test point")
+                return
+        }
+        
+        // Remove existing anchor and add new anchor
+        if let existingAnchor = virtualObjectAnchor {
+            print("existingAnchor = virtualObjectAnchor")
+            self.arSceneView.session.remove(anchor: existingAnchor)
+        }
+        virtualObjectAnchor = ARAnchor(name: virtualObjectAnchorName, transform: hitTestResult.worldTransform)
+        self.arSceneView.session.add(anchor: virtualObjectAnchor!)
+    }
+    
+    var virtualObjectAnchor: ARAnchor?
+    let virtualObjectAnchorName = "virtualObject"
+    
+    var virtualObject: SCNNode = {
+        guard let sceneURL = Bundle.main.url(forResource: "ship", withExtension: "scn", subdirectory: "art.scnassets"),
+            let referenceNode = SCNReferenceNode(url: sceneURL) else {
+                fatalError("can't load virtual object")
+        }
+        referenceNode.load()
+        
+        return referenceNode
+    }()
     /**
      Callback from the ARManager
      */
