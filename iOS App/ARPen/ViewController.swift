@@ -232,6 +232,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         }
         
     }
+    
+    // Restore the experience (virtual content)
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard anchor.name == virtualObjectAnchorName
+            else { return }
+        
+        // save the reference to the virtual object anchor when the anchor is added from relocalizing
+        if virtualObjectAnchor == nil {
+            virtualObjectAnchor = anchor
+        }
+        node.addChildNode(virtualObject)
+    }
+    
+//    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+//        print("in the othere renderer")
+//        let cubeNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+//        cubeNode.position = SCNVector3(0, 0, -0.2) // SceneKit/AR coordinates are in meters
+//        return cubeNode
+//    }
+    
     lazy var mapSaveURL: URL = {
         do {
             return try FileManager.default
@@ -246,10 +266,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     }()
     
     @IBAction func saveExperience(_ sender: UIButton) {
-        arSceneView.session.getCurrentWorldMap { worldMap, error in
+        self.arSceneView.session.getCurrentWorldMap { worldMap, error in
             guard let map = worldMap
                 else { self.showAlert(title: "Can't get current world map", message: error!.localizedDescription);
                     return }
+            
+            // Add a snapshot image indicating where the map was captured.
+            guard let snapshotAnchor = SnapshotAnchor(capturing: self.arSceneView)
+                else { fatalError("Can't take snapshot") }
+            map.anchors.append(snapshotAnchor)
             
             do {
                 let data = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
@@ -263,19 +288,53 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         }
     }
     
-    func showAlert(title: String,
-                   message: String,
-                   buttonTitle: String = "OK",
-                   showCancel: Bool = false,
-                   buttonHandler: ((UIAlertAction) -> Void)? = nil) {
-        print(title + "\n" + message)
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: buttonTitle, style: .default, handler: buttonHandler))
-        if showCancel {
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    // Called opportunistically to verify that map data can be loaded from filesystem.
+    var mapDataFromFile: Data? {
+        return try? Data(contentsOf: mapSaveURL)
+    }
+    
+    
+    @IBAction func loadExperience(_ sender: Any) {
+        /// - Tag: ReadWorldMap
+        let worldMap: ARWorldMap = {
+            guard let data = mapDataFromFile
+                else { fatalError("Map data should already be verified to exist before Load button is enabled.") }
+            do {
+                print(data)
+                guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data)
+                    else { fatalError("No ARWorldMap in archive.") }
+                return worldMap
+            } catch {
+                fatalError("Can't unarchive ARWorldMap from file data: \(error)")
+            }
+        }()
+        
+        // Display the snapshot image stored in the world map to aid user in relocalizing.
+        if let snapshotData = worldMap.snapshotAnchor?.imageData,
+            let snapshot = UIImage(data: snapshotData) {
+            self.snapshotThumbnail.image = snapshot
+        } else {
+            print("No snapshot image in world map")
         }
-        DispatchQueue.main.async {
-            self.present(alertController, animated: true, completion: nil)
+        // Remove the snapshot anchor from the world map since we do not need it in the scene.
+        worldMap.anchors.removeAll(where: { $0 is SnapshotAnchor })
+        
+        let configuration = self.defaultConfiguration // this app's standard world tracking settings
+        configuration.initialWorldMap = worldMap
+        self.arSceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        
+        isRelocalizingMap = true
+        virtualObjectAnchor = nil
+    }
+    
+    var isRelocalizingMap = false
+    
+    var defaultConfiguration: ARWorldTrackingConfiguration {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = .horizontal
+        configuration.environmentTexturing = .automatic
+        return configuration
+    }
     
     public func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
         // Update the UI to provide feedback on the state of the AR experience.
