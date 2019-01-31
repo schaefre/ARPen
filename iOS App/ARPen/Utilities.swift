@@ -113,3 +113,9 @@ extension CGImagePropertyOrientation {
         }
     }
 }
+
+// Setup notification names to be observed
+extension Notification.Name {
+    static let cameraDidChangeTrackingState = Notification.Name("cameraDidChangeTrackingState")
+    static let sessionDidUpdate = Notification.Name("sessionDidUpdate")
+}

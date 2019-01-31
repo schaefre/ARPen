@@ -9,6 +9,7 @@
 import UIKit
 import SceneKit
 import ARKit
+import Foundation
 
 /**
  The "Main" ViewController. This ViewController holds the instance of the PluginManager.
@@ -80,6 +81,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         if mapDataFromFile != nil {
             self.loadExperienceButton.isHidden = false
         }
+        
+        // Setup the observer for stateDidChange notification
+        NotificationCenter.default.addObserver(self, selector: #selector(handleStateChange(_:)), name: Notification.Name.cameraDidChangeTrackingState, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleStateChange(_:)), name: Notification.Name.sessionDidUpdate, object: nil)
     }
     
     /**
@@ -208,6 +213,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     }
     
     // MARK: - Persistence: Saving and Loading
+    // MARK: - Persistence: Save and Load Current AR Scene
+    // Receives notification on when session or camera tracking state changes and updates label
+    @objc func handleStateChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo else {
+            print("notification.userInfo is empty!")
+            return
+        }
+        switch notification.name {
+        case .sessionDidUpdate:
+            updateSessionInfoLabel(for: userInfo["frame"] as! ARFrame, trackingState: userInfo["trackingState"] as! ARCamera.TrackingState)
+            break
+        case .cameraDidChangeTrackingState:
+            updateSessionInfoLabel(for: userInfo["currentFrame"] as! ARFrame, trackingState: userInfo["trackingState"] as! ARCamera.TrackingState)
+            break
+        default:
+            print("Received unknown notification: \(notification.name)")
+        }
+        
+    }
     lazy var mapSaveURL: URL = {
         do {
             return try FileManager.default
@@ -252,7 +276,41 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         }
         DispatchQueue.main.async {
             self.present(alertController, animated: true, completion: nil)
+    
+    public func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
+        // Update the UI to provide feedback on the state of the AR experience.
+        let message: String
+        
+//        snapshotThumbnail.isHidden = true
+        switch (trackingState, frame.worldMappingStatus) {
+        case (.normal, .mapped),
+             (.normal, .extending):
+            if frame.anchors.contains(where: { $0.name == virtualObjectAnchorName }) {
+                // User has placed an object in scene and the session is mapped, prompt them to save the experience
+                message = "You can now save the current sketch by pressing 'Save Model' to save the current map."
+                self.saveExperienceButton.isHidden = false
+                
+            } else {
+                message = "There are no objects to be saved!"
+            }
+            
+//        case (.normal, _) where mapDataFromFile != nil && !isRelocalizingMap:
+//            message = "Move around to map the environment or tap 'Load Experience' to load a saved experience."
+            
+//        case (.normal, _) where mapDataFromFile == nil:
+//            message = "Move around to map the environment."
+            
+        case (.limited(.relocalizing), _) where isRelocalizingMap:
+            message = "Move your device to the location shown in the image."
+            snapshotThumbnail.isHidden = false
+            
+        default:
+//            message = trackingState.localizedFeedback
+            message = ""
         }
+        
+        instructionsLabel.text = message
+//        sessionInfoView.isHidden = message.isEmpty
     }
     
     // Mark: - ARManager Delegate

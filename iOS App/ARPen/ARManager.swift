@@ -34,10 +34,18 @@ class ARManager: NSObject, ARSessionDelegate, ARSessionObserver, OpenCVWrapperDe
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         self.delegate?.didChangeTrackingState(cam: camera)
+        
+        // create a dictionary literal to pass currentFrame and trackingState
+        let informationPackage: [String : Any] = ["currentFrame": session.currentFrame!, "trackingState": camera.trackingState]
+        NotificationCenter.default.post(name: Notification.Name.cameraDidChangeTrackingState, object: nil, userInfo: informationPackage)
     }
     
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         self.opencvWrapper.findMarker(frame.capturedImage, withCameraIntrinsics: frame.camera.intrinsics, cameraSize: frame.camera.imageResolution)
+        
+        // create a dictionary literal to pass frame and trackingState
+        let informationPackage: [String : Any] = ["frame": frame, "trackingState": frame.camera.trackingState]
+        NotificationCenter.default.post(name: Notification.Name.sessionDidUpdate, object: nil, userInfo: informationPackage)
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
