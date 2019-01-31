@@ -58,6 +58,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.pluginManager = PluginManager(scene: scene)
         self.pluginManager.delegate = self
         self.arSceneView.session.delegate = self.pluginManager.arManager
+        self.arSceneView.delegate = self
         
         self.arSceneView.autoenablesDefaultLighting = true
         self.arSceneView.pointOfView?.name = "iDevice Camera"
@@ -67,6 +68,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.arSceneView.scene = scene
         
         virtualObjectAnchor = nil
+        self.saveExperienceButton.isHidden = true
         
         setupPluginMenu()
         activatePlugin(withID: currentActivePluginID)

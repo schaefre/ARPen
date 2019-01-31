@@ -39,6 +39,8 @@
 		DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC28B472200E6025008B77AB /* SCNVector3Extensions.swift */; };
 		DC28B475200E64B7008B77AB /* ObjectCreationPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC28B474200E64B7008B77AB /* ObjectCreationPlugin.swift */; };
 		DC28B47A200E7E8A008B77AB /* MarkerBox.m in Sources */ = {isa = PBXBuildFile; fileRef = DC28B478200E7E89008B77AB /* MarkerBox.m */; };
+		E9B6BACC21F71D7E009F3AEC /* SnapshotAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6BACB21F71D7E009F3AEC /* SnapshotAnchor.swift */; };
+		E9B6BACE21F71DFA009F3AEC /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B6BACD21F71DFA009F3AEC /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,6 +95,8 @@
 		DC28B478200E7E89008B77AB /* MarkerBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerBox.m; sourceTree = "<group>"; };
 		DC28B479200E7E89008B77AB /* MarkerBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerBox.h; sourceTree = "<group>"; };
 		DCE5A37E202F504B005F4186 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		E9B6BACB21F71D7E009F3AEC /* SnapshotAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotAnchor.swift; sourceTree = "<group>"; };
+		E9B6BACD21F71DFA009F3AEC /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,11 +164,13 @@
 			isa = PBXGroup;
 			children = (
 				DC28B43F200E4353008B77AB /* AppDelegate.swift */,
+				DC28B453200E4389008B77AB /* ARManager.swift */,
 				DC28B443200E4353008B77AB /* ViewController.swift */,
+				E9B6BACB21F71D7E009F3AEC /* SnapshotAnchor.swift */,
+				E9B6BACD21F71DFA009F3AEC /* Utilities.swift */,
 				4A4B7F1B205817A200331810 /* SettingsViewControllers */,
 				DC18B2BB202384D700884920 /* UserDefaultsKeys.swift */,
 				DC28B464200E4825008B77AB /* PenScene.swift */,
-				DC28B453200E4389008B77AB /* ARManager.swift */,
 				DC28B45E200E4561008B77AB /* PenManager.swift */,
 				DC28B46A200E4C78008B77AB /* Button.swift */,
 				DC28B46C200E4E6E008B77AB /* MarkerBox.swift */,
@@ -293,6 +299,7 @@
 			files = (
 				DC28B461200E46DC008B77AB /* Plugin.swift in Sources */,
 				4A56953B20581B9000C8065E /* UserStudyRecordPluginProtocol.swift in Sources */,
+				E9B6BACE21F71DFA009F3AEC /* Utilities.swift in Sources */,
 				4A895F0A2052791100CC2C8E /* CubeByDraggingPlugin.swift in Sources */,
 				DC28B47A200E7E8A008B77AB /* MarkerBox.m in Sources */,
 				4A5695342058195200C8065E /* UserStudyRecordsListTableViewController.swift in Sources */,
@@ -313,6 +320,7 @@
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,
 				DC28B440200E4353008B77AB /* AppDelegate.swift in Sources */,
 				DC28B463200E471F008B77AB /* PluginManager.swift in Sources */,
+				E9B6BACC21F71D7E009F3AEC /* SnapshotAnchor.swift in Sources */,
 				DC28B467200E4BF1008B77AB /* PaintPlugin.swift in Sources */,
 				4AC711C7204EDCBE00CD4239 /* SettingsTableViewController.swift in Sources */,
 				DC28B46B200E4C78008B77AB /* Button.swift in Sources */,
