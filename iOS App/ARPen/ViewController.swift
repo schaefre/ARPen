@@ -214,7 +214,20 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
     }
     
-    // MARK: - Persistence: Saving and Loading
+    // Restore the experience (virtual content)
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard anchor.name == virtualObjectAnchorName
+            else { return }
+        
+        // save the reference to the virtual object anchor when the anchor is added from relocalizing
+        if virtualObjectAnchor == nil {
+            virtualObjectAnchor = anchor
+        }
+        node.addChildNode(virtualObject)
+        
+        // Todo: Send a notification to remove the snapshot anchor
+    }
+    
     // MARK: - Persistence: Save and Load Current AR Scene
     // Receives notification on when session or camera tracking state changes and updates label
     @objc func handleStateChange(_ notification: Notification) {
@@ -234,25 +247,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         }
         
     }
-    
-    // Restore the experience (virtual content)
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard anchor.name == virtualObjectAnchorName
-            else { return }
-        
-        // save the reference to the virtual object anchor when the anchor is added from relocalizing
-        if virtualObjectAnchor == nil {
-            virtualObjectAnchor = anchor
-        }
-        node.addChildNode(virtualObject)
-    }
-    
-//    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-//        print("in the othere renderer")
-//        let cubeNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
-//        cubeNode.position = SCNVector3(0, 0, -0.2) // SceneKit/AR coordinates are in meters
-//        return cubeNode
-//    }
     
     lazy var mapSaveURL: URL = {
         do {
@@ -282,7 +276,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
                 let data = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
                 try data.write(to: self.mapSaveURL, options: [.atomic])
                 DispatchQueue.main.async {
-                    // Show the load experience button now
+                    // Todo: Show the load experience button now
                 }
             } catch {
                 fatalError("Can't save map: \(error.localizedDescription)")
@@ -341,8 +335,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     public func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
         // Update the UI to provide feedback on the state of the AR experience.
         let message: String
-        
-//        snapshotThumbnail.isHidden = true
+
         switch (trackingState, frame.worldMappingStatus) {
         case (.normal, .mapped),
              (.normal, .extending):
@@ -355,26 +348,17 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
                 message = "There are no objects to be saved!"
             }
             
-//        case (.normal, _) where mapDataFromFile != nil && !isRelocalizingMap:
-//            message = "Move around to map the environment or tap 'Load Experience' to load a saved experience."
-            
-//        case (.normal, _) where mapDataFromFile == nil:
-//            message = "Move around to map the environment."
-            
         case (.limited(.relocalizing), _) where isRelocalizingMap:
             message = "Move your device to the location shown in the image."
             snapshotThumbnail.isHidden = false
             
         default:
-//            message = trackingState.localizedFeedback
             message = ""
         }
         
         instructionsLabel.text = message
-//        sessionInfoView.isHidden = message.isEmpty
     }
     
-    // Mark: - ARManager Delegate
     
     @IBAction func ARSceneViewTapped(_ sender:UITapGestureRecognizer) {
         print("Handling tap gesture")
@@ -413,6 +397,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
         return referenceNode
     }()
+    
+    // MARK: - ARManager Delegate
     /**
      Callback from the ARManager
      */
@@ -425,7 +411,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         checkVisualEffectView()
     }
     
-    // Mark: - PenManager delegate
+    // MARK: - PenManager Delegate
     /**
      Callback from PenManager
      */
@@ -470,11 +456,4 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBAction func softwarePenButtonReleased(_ sender: Any) {
         self.pluginManager.button(.Button1, pressed: false)
     }
-    
-    @IBAction func ARSceneViewTapped(_ sender:UITapGestureRecognizer) {
-        let cubeNode = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
-        cubeNode.position = SCNVector3(0, 0, -0.2) // SceneKit/AR coordinates are in meters
-        arSceneView.scene.rootNode.addChildNode(cubeNode)
-    }
-    
 }
