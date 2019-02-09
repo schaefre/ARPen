@@ -87,6 +87,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         // Setup the observer for stateDidChange notification
         NotificationCenter.default.addObserver(self, selector: #selector(handleStateChange(_:)), name: Notification.Name.cameraDidChangeTrackingState, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleStateChange(_:)), name: Notification.Name.sessionDidUpdate, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(removeSnapshotThumbnail(_:)), name: Notification.Name.virtualObjectDidRenderAtAnchor, object: nil)
     }
     
     /**
@@ -225,7 +227,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         }
         node.addChildNode(virtualObject)
         
-        // Todo: Send a notification to remove the snapshot anchor
+        NotificationCenter.default.post(name: Notification.Name.virtualObjectDidRenderAtAnchor, object: nil)
     }
     
     // MARK: - Persistence: Save and Load Current AR Scene
@@ -397,6 +399,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
         return referenceNode
     }()
+    
+    @objc func removeSnapshotThumbnail(_ notification: Notification) {
+        snapshotThumbnail.isHidden = true
+    }
     
     // MARK: - ARManager Delegate
     /**
