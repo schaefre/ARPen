@@ -76,7 +76,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Test]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tmA-fo-B07">
-                                <rect key="frame" x="317" y="340.5" width="33.5" height="14.5"/>
+                                <rect key="frame" x="316.5" y="340" width="34" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -87,6 +87,18 @@
                                     <constraint firstAttribute="width" constant="240" id="LWp-NE-RUj"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TE5-8l-oDy" userLabel="LoadMapButton">
+                                <rect key="frame" x="619" y="187" width="38" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="YAJ-tV-VCP"/>
+                                    <constraint firstAttribute="width" constant="38" id="vZI-5A-bw6"/>
+                                </constraints>
+                                <state key="normal" image="ShareSession"/>
+                                <connections>
+                                    <action selector="loadExperience:" destination="BV1-FR-VrT" eventType="touchUpInside" id="YfL-7d-fQF"/>
+                                    <action selector="shareSession:" destination="BV1-FR-VrT" eventType="touchUpInside" id="b6w-wZ-SC4"/>
+                                </connections>
+                            </button>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iYd-yH-V3o">
                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YXb-VB-vP4">
@@ -200,10 +212,12 @@
                             <constraint firstItem="Tcv-GO-7VL" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailingMargin" id="AGg-Ry-Luc"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="A5z-U4-mJN" secondAttribute="trailing" constant="10" id="CMI-vn-wNc"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="DLC-mq-LKi"/>
+                            <constraint firstItem="TE5-8l-oDy" firstAttribute="leading" secondItem="6eN-xr-Mph" secondAttribute="leading" id="Eoe-T7-c5S"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="LBk-3V-d3Y"/>
                             <constraint firstItem="6eN-xr-Mph" firstAttribute="top" secondItem="Tcv-GO-7VL" secondAttribute="bottom" constant="85" id="PV9-Nu-XH5"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="QDe-OA-GDZ"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="A5z-U4-mJN" secondAttribute="bottom" constant="10" id="QsW-2Q-MbL"/>
+                            <constraint firstItem="6eN-xr-Mph" firstAttribute="top" secondItem="TE5-8l-oDy" secondAttribute="bottom" constant="8" symbolic="YES" id="Qtk-wA-XgQ"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailing" id="Un0-kz-gbv"/>
                             <constraint firstAttribute="trailing" secondItem="Z1i-B5-dqO" secondAttribute="trailing" id="ZCc-G1-ORQ"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="leading" secondItem="EIQ-Ip-Tyt" secondAttribute="leading" id="ZPg-7T-trW"/>
@@ -216,11 +230,6 @@
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="EB1-VF-Kd4" secondAttribute="trailing" constant="10" id="xh7-vy-qs8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EIQ-Ip-Tyt"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="iYd-yH-V3o"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="6Ro-dD-aza"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -236,6 +245,7 @@
                         <outlet property="loadExperienceButton" destination="6eN-xr-Mph" id="DLC-fW-4gJ"/>
                         <outlet property="pluginMenuScrollView" destination="gGF-H0-N2c" id="VX1-TR-Ghh"/>
                         <outlet property="saveExperienceButton" destination="EB1-VF-Kd4" id="5cd-zv-C6p"/>
+                        <outlet property="shareSessionButton" destination="TE5-8l-oDy" id="AEe-k5-1Bt"/>
                         <outlet property="snapshotThumbnail" destination="Tcv-GO-7VL" id="Xtv-zi-FVS"/>
                         <outlet property="visualEffectView" destination="iYd-yH-V3o" id="9t5-aF-3w7"/>
                     </connections>
@@ -757,6 +767,7 @@
         <image name="Checkmark" width="37" height="37"/>
         <image name="LoadModel" width="65.279998779296875" height="55.919998168945312"/>
         <image name="SaveModel" width="65.279998779296875" height="55.439998626708984"/>
+        <image name="ShareSession" width="53" height="55.919998168945312"/>
         <image name="SoftwareButton" width="434.39999389648438" height="434.39999389648438"/>
         <image name="cog" width="128" height="128"/>
     </resources>
