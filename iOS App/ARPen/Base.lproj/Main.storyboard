@@ -75,7 +75,7 @@
                                     <action selector="loadExperience:" destination="BV1-FR-VrT" eventType="touchUpInside" id="jqv-bB-ELd"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Test]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tmA-fo-B07">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Test]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tmA-fo-B07" userLabel="Persistence Label">
                                 <rect key="frame" x="316.5" y="340" width="34" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
@@ -95,7 +95,6 @@
                                 </constraints>
                                 <state key="normal" image="ShareSession"/>
                                 <connections>
-                                    <action selector="loadExperience:" destination="BV1-FR-VrT" eventType="touchUpInside" id="YfL-7d-fQF"/>
                                     <action selector="shareSession:" destination="BV1-FR-VrT" eventType="touchUpInside" id="b6w-wZ-SC4"/>
                                 </connections>
                             </button>
@@ -105,49 +104,49 @@
                                     <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <visualEffectView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="25J-KE-Ech">
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25J-KE-Ech">
                                             <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="1CQ-qs-10Y">
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1CQ-qs-10Y">
                                                 <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <view opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="McQ-JC-bMI">
+                                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="McQ-JC-bMI">
                                                         <rect key="frame" x="213.5" y="153.5" width="240" height="68"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Searching for ARPen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4kR-hm-tXz">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching for ARPen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4kR-hm-tXz">
                                                                 <rect key="frame" x="36" y="8" width="196" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="px8-Ix-0v1">
+                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="px8-Ix-0v1">
                                                                 <rect key="frame" x="8" y="9" width="20" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="7kg-RN-lc1"/>
                                                                     <constraint firstAttribute="width" constant="20" id="LuU-oe-dak"/>
                                                                 </constraints>
                                                             </activityIndicatorView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Calibrating ARKit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLj-hG-Yqr">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calibrating ARKit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLj-hG-Yqr">
                                                                 <rect key="frame" x="36" y="37" width="196" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KO4-Ne-Cwh">
+                                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KO4-Ne-Cwh">
                                                                 <rect key="frame" x="8" y="38" width="20" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="20" id="RNm-bR-X1Q"/>
                                                                     <constraint firstAttribute="height" constant="20" id="h0d-wg-auQ"/>
                                                                 </constraints>
                                                             </activityIndicatorView>
-                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="D0X-YH-HF7">
+                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="D0X-YH-HF7">
                                                                 <rect key="frame" x="8" y="38" width="20" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="sbI-jO-nbI"/>
                                                                     <constraint firstAttribute="width" constant="20" id="zX9-Nl-ixq"/>
                                                                 </constraints>
                                                             </imageView>
-                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="Z1N-qB-Uok">
+                                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="Z1N-qB-Uok">
                                                                 <rect key="frame" x="8" y="9" width="20" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="ln3-6F-v4D"/>
@@ -199,6 +198,12 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Test]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAV-od-yTP" userLabel="Multiuser Label">
+                                <rect key="frame" x="316.5" y="317" width="34" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -213,11 +218,13 @@
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="A5z-U4-mJN" secondAttribute="trailing" constant="10" id="CMI-vn-wNc"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="bottom" secondItem="YSQ-pH-N6L" secondAttribute="bottom" id="DLC-mq-LKi"/>
                             <constraint firstItem="TE5-8l-oDy" firstAttribute="leading" secondItem="6eN-xr-Mph" secondAttribute="leading" id="Eoe-T7-c5S"/>
+                            <constraint firstItem="tmA-fo-B07" firstAttribute="top" secondItem="VAV-od-yTP" secondAttribute="bottom" constant="8" id="FZ5-ZE-CbB"/>
                             <constraint firstItem="Z1i-B5-dqO" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="LBk-3V-d3Y"/>
                             <constraint firstItem="6eN-xr-Mph" firstAttribute="top" secondItem="Tcv-GO-7VL" secondAttribute="bottom" constant="85" id="PV9-Nu-XH5"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="top" secondItem="YSQ-pH-N6L" secondAttribute="top" id="QDe-OA-GDZ"/>
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="bottom" secondItem="A5z-U4-mJN" secondAttribute="bottom" constant="10" id="QsW-2Q-MbL"/>
                             <constraint firstItem="6eN-xr-Mph" firstAttribute="top" secondItem="TE5-8l-oDy" secondAttribute="bottom" constant="8" symbolic="YES" id="Qtk-wA-XgQ"/>
+                            <constraint firstItem="VAV-od-yTP" firstAttribute="centerX" secondItem="tmA-fo-B07" secondAttribute="centerX" id="SnO-gM-CZx"/>
                             <constraint firstItem="iYd-yH-V3o" firstAttribute="trailing" secondItem="YSQ-pH-N6L" secondAttribute="trailing" id="Un0-kz-gbv"/>
                             <constraint firstAttribute="trailing" secondItem="Z1i-B5-dqO" secondAttribute="trailing" id="ZCc-G1-ORQ"/>
                             <constraint firstItem="gGF-H0-N2c" firstAttribute="leading" secondItem="EIQ-Ip-Tyt" secondAttribute="leading" id="ZPg-7T-trW"/>
@@ -230,6 +237,11 @@
                             <constraint firstItem="EIQ-Ip-Tyt" firstAttribute="trailing" secondItem="EB1-VF-Kd4" secondAttribute="trailing" constant="10" id="xh7-vy-qs8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EIQ-Ip-Tyt"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="iYd-yH-V3o"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="6Ro-dD-aza"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -241,7 +253,8 @@
                         <outlet property="arPenImage" destination="Z1N-qB-Uok" id="Ffr-Fr-nlm"/>
                         <outlet property="arPenLabel" destination="4kR-hm-tXz" id="WxC-sC-hY1"/>
                         <outlet property="arSceneView" destination="Z1i-B5-dqO" id="iVk-um-itv"/>
-                        <outlet property="instructionsLabel" destination="tmA-fo-B07" id="AoY-4v-bnV"/>
+                        <outlet property="instructionsLabelForMultiusers" destination="VAV-od-yTP" id="60b-BA-IbI"/>
+                        <outlet property="instructionsLabelForPersistence" destination="tmA-fo-B07" id="Iow-ue-SOg"/>
                         <outlet property="loadExperienceButton" destination="6eN-xr-Mph" id="DLC-fW-4gJ"/>
                         <outlet property="pluginMenuScrollView" destination="gGF-H0-N2c" id="VX1-TR-Ghh"/>
                         <outlet property="saveExperienceButton" destination="EB1-VF-Kd4" id="5cd-zv-C6p"/>

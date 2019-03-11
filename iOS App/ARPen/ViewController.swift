@@ -30,7 +30,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     
     @IBOutlet weak var saveExperienceButton: UIButton!
     @IBOutlet weak var loadExperienceButton: UIButton!
-    @IBOutlet weak var instructionsLabel: UILabel!
+    @IBOutlet weak var instructionsLabelForPersistence: UILabel!
+    @IBOutlet weak var instructionsLabelForMultiusers: UILabel!
     @IBOutlet weak var snapshotThumbnail: UIImageView!
     @IBOutlet weak var shareSessionButton: UIButton!
     
@@ -343,37 +344,76 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     
     public func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
         // Update the UI to provide feedback on the state of the AR experience.
-        let message: String
+        let messageForPersistenceLabel: String
+        let messageForMultiuserLabel: String
 
         switch (trackingState, frame.worldMappingStatus) {
         case (.normal, .mapped),
              (.normal, .extending):
             if frame.anchors.contains(where: { $0.name == virtualObjectAnchorName }) {
                 // User has placed an object in scene and the session is mapped, prompt them to save the experience
-                message = "You can now save the current sketch by pressing 'Save Model' to save the current map."
+                messageForPersistenceLabel = "You can now save the current sketch by pressing 'Save Model' to save the current map."
                 self.saveExperienceButton.isHidden = false
                 
             } else {
-                message = "There are no objects to be saved!"
+                messageForPersistenceLabel = "There are no objects to be saved!"
             }
-            
+        
         case (.limited(.relocalizing), _) where isRelocalizingMap:
-            message = "Move your device to the location shown in the image."
+            messageForPersistenceLabel = "Move your device to the location shown in the image."
             snapshotThumbnail.isHidden = false
-            
+        
         default:
-            message = ""
+            messageForPersistenceLabel = ""
         }
+        
+        switch trackingState {
+        case .normal where frame.anchors.isEmpty && multipeerSession.connectedPeers.isEmpty:
+            // No planes detected; provide instructions for this app's AR interactions.
+            messageForMultiuserLabel = "Move around to map the environment, or wait to join a shared session."
+
+        case .normal where !multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
+            let peerNames = multipeerSession.connectedPeers.map({ $0.displayName }).joined(separator: ", ")
+            messageForMultiuserLabel = "Connected with \(peerNames)."
+
+        case .notAvailable:
+            messageForMultiuserLabel = "Tracking unavailable."
+
+        case .limited(.excessiveMotion):
+            messageForMultiuserLabel = "Tracking limited - Move the device more slowly."
+
+        case .limited(.insufficientFeatures):
+            messageForMultiuserLabel = "Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions."
+
+        case .limited(.initializing) where mapProvider != nil,
+             .limited(.relocalizing) where mapProvider != nil:
+            messageForMultiuserLabel = "Received map from \(mapProvider!.displayName)."
+
+        case .limited(.relocalizing):
+            messageForMultiuserLabel = "Resuming session — move to where you were when the session was interrupted."
+
+        case .limited(.initializing):
+            messageForMultiuserLabel = "Initializing AR session."
+
+        default:
+            // No feedback needed when tracking is normal and planes are visible.
+            // (Nor when in unreachable limited-tracking states.)
+            messageForMultiuserLabel = ""
+
+        }
+        
+        
+        instructionsLabelForPersistence.text = messageForPersistenceLabel
+        instructionsLabelForMultiusers.text = messageForMultiuserLabel
         
         switch frame.worldMappingStatus {
-        case .notAvailable, .limited:
-            shareSessionButton.isEnabled = false
-        case .extending, .mapped:
-            shareSessionButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+            case .notAvailable, .limited:
+                shareSessionButton.isEnabled = false
+            case .extending, .mapped:
+                shareSessionButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
             
         }
         
-        instructionsLabel.text = message
     }
     
     
