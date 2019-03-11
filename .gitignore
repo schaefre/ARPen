@@ -68,3 +68,5 @@ fastlane/screenshots
 fastlane/test_output
 Carthage/Checkouts
 IDEWorkspaceChecks.plist
+Documentation/images/Persistence UI buttons/loadMap button.png
+Documentation/images/Persistence UI buttons/saveMap button.png
