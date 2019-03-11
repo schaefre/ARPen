@@ -10,6 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 import Foundation
+import MultipeerConnectivity
 
 /**
  The "Main" ViewController. This ViewController holds the instance of the PluginManager.
@@ -31,6 +32,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     @IBOutlet weak var loadExperienceButton: UIButton!
     @IBOutlet weak var instructionsLabel: UILabel!
     @IBOutlet weak var snapshotThumbnail: UIImageView!
+    @IBOutlet weak var shareSessionButton: UIButton!
     
     let menuButtonHeight = 70
     let menuButtonPadding = 5
@@ -43,6 +45,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     //Manager for user study data
     let userStudyRecordManager = UserStudyRecordManager()
     
+    // Multipeer session object
+    var multipeerSession: MultipeerSession!
     
     /**
      A quite standard viewDidLoad
@@ -89,6 +93,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         NotificationCenter.default.addObserver(self, selector: #selector(handleStateChange(_:)), name: Notification.Name.sessionDidUpdate, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeSnapshotThumbnail(_:)), name: Notification.Name.virtualObjectDidRenderAtAnchor, object: nil)
+        
+        // Setup multipeer session
+        multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
     }
     
     /**
@@ -358,6 +365,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             message = ""
         }
         
+        switch frame.worldMappingStatus {
+        case .notAvailable, .limited:
+            shareSessionButton.isEnabled = false
+        case .extending, .mapped:
+            shareSessionButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+            
+        }
+        
         instructionsLabel.text = message
     }
     
@@ -402,6 +417,51 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     
     @objc func removeSnapshotThumbnail(_ notification: Notification) {
         snapshotThumbnail.isHidden = true
+    }
+    
+    // MARK: - Multiuser
+    
+    // Share worldMap with others
+    @IBAction func shareSession(_ button: UIButton) {
+        arSceneView.session.getCurrentWorldMap { worldMap, error in
+            guard let map = worldMap
+                else { print("Error: \(error!.localizedDescription)");
+                    return }
+            
+            guard let data = try?
+                NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                else { fatalError("can't encode map!") }
+            self.multipeerSession.sendToAllPeers(data)
+        }
+    }
+    
+    var mapProvider: MCPeerID?
+    
+    /// - Tag: ReceiveData
+    func receivedData(_ data: Data, from peer: MCPeerID) {
+        
+        do {
+            if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
+                // Run the session with the received world map.
+                let configuration = ARWorldTrackingConfiguration()
+                configuration.planeDetection = .horizontal
+                configuration.initialWorldMap = worldMap
+                arSceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                
+                // Remember who provided the map for showing UI feedback.
+                mapProvider = peer
+            }
+            else
+                if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
+                    // Add anchor to the session, ARSCNView delegate adds visible content.
+                    arSceneView.session.add(anchor: anchor)
+                }
+                else {
+                    print("unknown data recieved from \(peer)")
+            }
+        } catch {
+            print("can't decode data recieved from \(peer)")
+        }
     }
     
     // MARK: - ARManager Delegate
