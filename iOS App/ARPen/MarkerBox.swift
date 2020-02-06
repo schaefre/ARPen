@@ -252,7 +252,7 @@ class MarkerBox: SCNNode {
                 point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
             case (.bottom):
                 if(model == Model.top){
-                    point.position = SCNVector3(xTranslationAway, yTranslationAway, zTranslationAway)
+                    point.position = SCNVector3(xTranslationAway + xTranslationMidTip, yTranslationAway + yTranslationMidTip, zTranslationAway - zTranslationMidTip)
                 } else {
                     point.position = SCNVector3(xTranslationAway, yTranslationAway, zTranslationAway)
                 }
@@ -263,7 +263,7 @@ class MarkerBox: SCNNode {
                 point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
             case (.left):
                 if(model == Model.top){
-                    point.position = SCNVector3(xTranslationAway, yTranslationAway, zTranslationAway)
+                    point.position = SCNVector3(xTranslationAway + xTranslationMidTip, yTranslationAway + zTranslationMidTip, zTranslationAway - yTranslationMidTip)
                 } else {
                     point.position = SCNVector3(xTranslationAway, yTranslationAway, zTranslationAway)//The x translation needs to be inverted as the marker is rotated compared to the others RENE changed to positive
                 }
@@ -274,7 +274,7 @@ class MarkerBox: SCNNode {
                 point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
             case (.front):
                 if(model == Model.top){
-                    point.position = SCNVector3(xTranslationAway, yTranslationAway, zTranslationAway)
+                    point.position = SCNVector3(xTranslationAway + zTranslationMidTip, yTranslationAway + yTranslationMidTip, zTranslationAway - xTranslationMidTip)
                 } else {
                     point.position = SCNVector3(xTranslationAway, yTranslationAway, zTranslationAway)
                 }
