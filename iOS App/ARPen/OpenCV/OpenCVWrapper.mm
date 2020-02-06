@@ -20,7 +20,8 @@ using namespace std;
 
 aruco::MarkerDetector mDetector;
 /// markerSize is the size of the marker in real world in meters.
-float markerSize = 0.0258; // Lieber Felix. Komm bitte nicht nochmal auf die Idee diesen Wert anzupassen, außer du druckst neue Marker! gez. Felix
+//float markerSize = 0.0258; // Lieber Felix. Komm bitte nicht nochmal auf die Idee diesen Wert anzupassen, außer du druckst neue Marker! gez. Felix
+float markerSize = 0.0230;
 
 @interface OpenCVWrapper()
 @property NSOperationQueue* queue;
