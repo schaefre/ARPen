@@ -98,7 +98,7 @@ float markerSize = 0.0230;
         int i = 0;
         
         for(it = allMarkers.begin(); it != allMarkers.end(); it++,i++) {
-            if (it->id < 1 || it->id > 8) {
+            if (it->id < 1 || it->id > 20) {
                 continue;
             }
             markers.push_back(*it);
