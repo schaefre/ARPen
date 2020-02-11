@@ -65,14 +65,14 @@ class MarkerBox: SCNNode {
     func calculatePenTip(length: Double){
         
         
-        let model: Model = Model.back
+        let model: Model = Model.topfront
         
         
         
         
         var penLength: Double = length //measured from center of the cube to the pen tip. In meters
         let cubeSideLength: Double = 0.03 //in meters
-        let markerOffset: Double = 0.0015 //x & y offset of marker from center of the cube's side. For "close" markers. In meters
+        let markerOffset: Double = 0.001 //x & y offset of marker from center of the cube's side. For "close" markers. In meters
         // translation values from the detected marker position to the pen tip
         var xTranslationCloseBack, yTranslationCloseBack, zTranslationCloseBack,//translation values for the sides of the cube closer to the stem of the pen -> "close" markers
             xTranslationAwayBack, yTranslationAwayBack, zTranslationAwayBack, //translation values for the sides of the cube away from the stem of the pen -> "away" markers
@@ -93,7 +93,7 @@ class MarkerBox: SCNNode {
         var backToTipLength: Double = 0
         var midToTipLength: Double = 0
         
-        let frontToTipLength: Double = -(sqrt(27)/2 + 0.3)/100 //constant
+        let frontToTipLength: Double = -0.031 //constant
         let topToMidLength: Double = 0.0370 //constant
         
         
@@ -105,17 +105,17 @@ class MarkerBox: SCNNode {
         case Model.back:
             backToTipLength  = 0.140
         case Model.top:
-            midToTipLength   = 0.0625
+            midToTipLength   = 0.0635
         case Model.backfront:
-            backToTipLength  = 0
+            backToTipLength  = 0.184
         case Model.backtop:
-            backToTipLength  = 0
-            midToTipLength   = 0
+            backToTipLength  = 0.140
+            midToTipLength   = 0.0635
         case Model.topfront:
-            midToTipLength   = 0
+            midToTipLength   = 0.108
         default:
-            backToTipLength  = 0
-            midToTipLength   = 0
+            backToTipLength  = 0.140
+            midToTipLength   = 0.0635
         }
             
         //BACKMODELPART START
