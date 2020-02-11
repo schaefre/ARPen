@@ -34,9 +34,10 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
      */
     init(scene: PenScene) {
         self.paintPlugin = PaintPlugin()
-        self.plugins = [paintPlugin, CubeByDraggingPlugin(), SphereByDraggingPlugin(), CylinderByDraggingPlugin(), PyramidByDraggingPlugin(), CubeByExtractionPlugin(), ARMenusPlugin(), TranslationDemoPlugin(), CombinationPlugin(), ModelingPlugin(), SweepPluginProfileAndPath(), SweepPluginTwoProfiles(), LoftPlugin(), RevolvePluginProfileAndAxis(), RevolvePluginProfileAndCircle(), RevolvePluginTwoProfiles(), CombinePluginFunction(), CombinePluginSolidHole()]
+        //self.plugins = [paintPlugin, MarkerBackPlugin(), CubeByDraggingPlugin(), SphereByDraggingPlugin(), CylinderByDraggingPlugin(), PyramidByDraggingPlugin(), CubeByExtractionPlugin(), ARMenusPlugin(), TranslationDemoPlugin(), CombinationPlugin(), ModelingPlugin(), SweepPluginProfileAndPath(), SweepPluginTwoProfiles(), LoftPlugin(), RevolvePluginProfileAndAxis(), RevolvePluginProfileAndCircle(), RevolvePluginTwoProfiles(), CombinePluginFunction(), CombinePluginSolidHole()]
+        self.plugins = [paintPlugin, MarkerBackPlugin(), MarkerFrontPlugin(), MarkerTopPlugin(), MarkerBackFrontPlugin(), MarkerBackTopPlugin(), MarkerTopFrontPlugin()]
         self.pluginInstructionsCanBeHidden = Array(repeating: true, count: self.plugins.count)
-        self.experimentalPluginsStartAtIndex = 7
+        self.experimentalPluginsStartAtIndex = 8
         
         
         self.arManager = ARManager(scene: scene)

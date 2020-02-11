@@ -15,6 +15,7 @@ class MarkerBox: SCNNode {
     private var markerArray: [SCNNode]
     var penTipPositionHistory: [SCNVector3] = []
     var penLength: Double = 14.0
+    var model = Model.back
     
     /**
      * Describes in which landscape orientation the device is currently hold
@@ -65,12 +66,10 @@ class MarkerBox: SCNNode {
     func calculatePenTip(length: Double){
         
         
-        let model: Model = Model.topfront
+        print("hey")
         
         
-        
-        
-        var penLength: Double = length //measured from center of the cube to the pen tip. In meters
+        //var penLength: Double = length //measured from center of the cube to the pen tip. In meters
         let cubeSideLength: Double = 0.03 //in meters
         let markerOffset: Double = 0.001 //x & y offset of marker from center of the cube's side. For "close" markers. In meters
         // translation values from the detected marker position to the pen tip
@@ -508,6 +507,12 @@ class MarkerBox: SCNNode {
         case HomeButtonRight
     }
     
+    func setModel(newmodel: Model){
+        print(model)
+        print(newmodel)
+        model = newmodel
+        print(model)
+    }
 }
 
 /**
