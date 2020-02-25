@@ -65,6 +65,7 @@
 		8DC5F14423F304CF0096F395 /* MarkerBackFrontPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC5F14323F304CF0096F395 /* MarkerBackFrontPlugin.swift */; };
 		8DC5F14623F305520096F395 /* MarkerBackTopPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC5F14523F305520096F395 /* MarkerBackTopPlugin.swift */; };
 		8DC5F14823F3059D0096F395 /* MarkerTopFrontPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC5F14723F3059D0096F395 /* MarkerTopFrontPlugin.swift */; };
+		8DFB846724053EDE0018B84F /* MarkerBackFrontSmallPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFB846624053EDE0018B84F /* MarkerBackFrontSmallPlugin.swift */; };
 		AA93510A224245CE002AEB00 /* ARMenusPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA935109224245CE002AEB00 /* ARMenusPlugin.swift */; };
 		AA93510C2242460D002AEB00 /* ARMenusSupportFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA93510B2242460D002AEB00 /* ARMenusSupportFile.swift */; };
 		DC18B2BC202384D700884920 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC18B2BB202384D700884920 /* UserDefaultsKeys.swift */; };
@@ -176,6 +177,7 @@
 		8DC5F14323F304CF0096F395 /* MarkerBackFrontPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerBackFrontPlugin.swift; sourceTree = "<group>"; };
 		8DC5F14523F305520096F395 /* MarkerBackTopPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerBackTopPlugin.swift; sourceTree = "<group>"; };
 		8DC5F14723F3059D0096F395 /* MarkerTopFrontPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerTopFrontPlugin.swift; sourceTree = "<group>"; };
+		8DFB846624053EDE0018B84F /* MarkerBackFrontSmallPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerBackFrontSmallPlugin.swift; sourceTree = "<group>"; };
 		AA935109224245CE002AEB00 /* ARMenusPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMenusPlugin.swift; sourceTree = "<group>"; };
 		AA93510B2242460D002AEB00 /* ARMenusSupportFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMenusSupportFile.swift; sourceTree = "<group>"; };
 		DC18B2BB202384D700884920 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				8DC5F14323F304CF0096F395 /* MarkerBackFrontPlugin.swift */,
 				8DC5F14523F305520096F395 /* MarkerBackTopPlugin.swift */,
 				8DC5F14723F3059D0096F395 /* MarkerTopFrontPlugin.swift */,
+				8DFB846624053EDE0018B84F /* MarkerBackFrontSmallPlugin.swift */,
 				DC28B474200E64B7008B77AB /* ObjectCreationPlugin.swift */,
 				4A895F092052791100CC2C8E /* CubeByDraggingPlugin.swift */,
 				4A895F0B2052D46000CC2C8E /* CubeByExtractionPlugin.swift */,
@@ -643,6 +646,7 @@
 				4AAC4B0B23A24A6E003B6E83 /* Meshing.mm in Sources */,
 				DC28B473200E6025008B77AB /* SCNVector3Extensions.swift in Sources */,
 				4AAC4AEA23A24A20003B6E83 /* ARPGeomNode.swift in Sources */,
+				8DFB846724053EDE0018B84F /* MarkerBackFrontSmallPlugin.swift in Sources */,
 				8DC5F14023F301200096F395 /* MarkerFrontPlugin.swift in Sources */,
 				DC28B440200E4353008B77AB /* AppDelegate.swift in Sources */,
 				DC28B463200E471F008B77AB /* PluginManager.swift in Sources */,

@@ -64,14 +64,10 @@ class MarkerBox: SCNNode {
     }
     
     func calculatePenTip(length: Double){
-        
-        
-        print("hey")
-        
-        
         //var penLength: Double = length //measured from center of the cube to the pen tip. In meters
         let cubeSideLength: Double = 0.03 //in meters
         let markerOffset: Double = 0.001 //x & y offset of marker from center of the cube's side. For "close" markers. In meters
+        let markerOffsetSmall: Double = 0.000 //x & y offset of marker from center of the cube's side. For "close" markers. In meters
         // translation values from the detected marker position to the pen tip
         var xTranslationCloseBack, yTranslationCloseBack, zTranslationCloseBack,//translation values for the sides of the cube closer to the stem of the pen -> "close" markers
             xTranslationAwayBack, yTranslationAwayBack, zTranslationAwayBack, //translation values for the sides of the cube away from the stem of the pen -> "away" markers
@@ -94,6 +90,7 @@ class MarkerBox: SCNNode {
         
         let frontToTipLength: Double = -0.031 //constant
         let topToMidLength: Double = 0.0370 //constant
+        let frontToTippSmallLength: Double = 0 //constant
         
         
         xTranslationMidTip = 0
@@ -112,6 +109,8 @@ class MarkerBox: SCNNode {
             midToTipLength   = 0.0635
         case Model.topfront:
             midToTipLength   = 0.108
+        case Model.small:
+            backToTipLength = 0
         default:
             backToTipLength  = 0.140
             midToTipLength   = 0.0635
@@ -190,6 +189,35 @@ class MarkerBox: SCNNode {
             zTranslationAwayFront = 0
         }
         //FRONTMODELPART END
+        
+        //SMALLMODEL START
+        if(model == Model.small ){
+            //calculation of translation values for the "close" markers. The calculations assume looking along the z Axis in positive direction (directly onto the marker)
+            //for z, first move from position of the marker into the center of the cube (positive Z -> inside the cube)
+            zTranslationCloseFront = 0.5 * cubeSideLength
+            //second, apply translation to the z position of the pen tip (from the marker's coordinate system)
+            zTranslationCloseFront -= (sin(angle) * frontToTippSmallLength)
+            
+            //for x, first correct the marker offset to move to the center of the cube's side
+            xTranslationCloseFront = -markerOffsetSmall
+            //second, apply translation to the x position of the pen tip (from the marker's coordinate system)
+            xTranslationCloseFront -= ((cos(angle) * frontToTippSmallLength)/sqrt(2))
+            //since the translations for y is the same as for x, copy the calculation
+            yTranslationCloseFront = xTranslationCloseFront
+            
+            
+            //calculation of translation values for the "away" markers. The calculations assume looking along the z Axis in positive direction (directly onto the marker)
+            //for z, first move from position of the marker into the center of the cube (positive Z -> inside the cube)
+            zTranslationAwayFront = 0.5 * cubeSideLength
+            //second, apply translation to the z position of the pen tip (from the marker's coordinate system)
+            zTranslationAwayFront += (sin(angle) * frontToTippSmallLength)
+            
+            //for x, apply translation to the x position of the pen tip (from the marker's coordinate system)
+            xTranslationAwayFront = -(cos(angle) * frontToTippSmallLength)/sqrt(2)
+            //since the translations for y is the same as for x, copy the calculation
+            yTranslationAwayFront = xTranslationAwayFront
+        }
+        //SMALLMODEL END
         
         
         // TOPMODELPART START
@@ -382,6 +410,47 @@ class MarkerBox: SCNNode {
                 if orientationState == .HomeButtonLeft {
                     point.eulerAngles.z += Float.pi
                 }
+            case (.S_back):
+                point.position = SCNVector3(xTranslationCloseFront, yTranslationCloseFront, zTranslationCloseFront)
+                point.eulerAngles = SCNVector3(x: 0, y: -Float.pi/2, z: -Float.pi/2)
+                //in case of HomeButtonLeft the orientation has to be rotated another 180 degrees after Rotation to top marker
+                if orientationState == .HomeButtonLeft {
+                    point.eulerAngles.z += Float.pi
+                }
+                point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
+            case (.S_top):
+                point.position = SCNVector3(xTranslationCloseFront, yTranslationCloseFront, zTranslationCloseFront)
+                if orientationState == .HomeButtonLeft {
+                    point.eulerAngles.z += Float.pi
+                }
+                point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
+            case (.S_right):
+                point.position = SCNVector3(xTranslationCloseFront, yTranslationCloseFront, zTranslationCloseFront)
+                point.eulerAngles = SCNVector3(x: Float.pi/2, y: 0, z: Float.pi/2)
+                if orientationState == .HomeButtonLeft {
+                    point.eulerAngles.z += Float.pi
+                }
+                point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
+            case (.S_bottom):
+                point.position = SCNVector3(xTranslationAwayFront, yTranslationAwayFront, zTranslationAwayFront)
+                point.eulerAngles.y = Float.pi
+                if orientationState == .HomeButtonLeft {
+                    point.eulerAngles.z += Float.pi
+                }
+                point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
+            case (.S_left):
+                point.position = SCNVector3(xTranslationAwayFront, yTranslationAwayFront, zTranslationAwayFront)
+                point.eulerAngles.x = -Float.pi/2
+                if orientationState == .HomeButtonLeft {
+                    point.eulerAngles.z += Float.pi
+                }
+                point.simdLocalRotate(by: quaternionFromTopMarkerToPenTip)
+            case (.S_front):
+                point.position = SCNVector3(xTranslationAwayFront, yTranslationAwayFront, zTranslationAwayFront)
+                point.eulerAngles = SCNVector3(x: 0, y: Float.pi/2, z: Float.pi/2)
+                if orientationState == .HomeButtonLeft {
+                    point.eulerAngles.z += Float.pi
+                }
             case (.CHIARPen):
                 point.position = SCNVector3(-xCHIARPen, -yCHIARPen, 0)
                 point.eulerAngles = SCNVector3(x: 0, y: -Float.pi/2, z: Float(-135.degreesToRadians))
@@ -526,10 +595,11 @@ enum MarkerFace: Int {
     case laserMesseARPen = 8
     case F_back = 9, F_top, F_right, F_bottom, F_left, F_front
     case T_back = 15, T_top, T_right, T_bottom, T_left, T_front
+    case S_back = 21, S_top, S_right, S_bottom, S_left, S_front
     case notExpected = 0
 }
 
 enum Model: Int {
-    case back = 1, front , top, backfront, backtop, topfront
+    case back = 1, front , top, backfront, backtop, topfront, small
     case notExpected = 0
 }
