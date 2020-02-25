@@ -90,7 +90,7 @@ class MarkerBox: SCNNode {
         
         let frontToTipLength: Double = -0.031 //constant
         let topToMidLength: Double = 0.0370 //constant
-        let frontToTippSmallLength: Double = 0 //constant
+        let frontToTippSmallLength: Double = -0.018 //constant
         
         
         xTranslationMidTip = 0
@@ -110,7 +110,7 @@ class MarkerBox: SCNNode {
         case Model.topfront:
             midToTipLength   = 0.108
         case Model.small:
-            backToTipLength = 0
+            backToTipLength  = 0.166
         default:
             backToTipLength  = 0.140
             midToTipLength   = 0.0635
