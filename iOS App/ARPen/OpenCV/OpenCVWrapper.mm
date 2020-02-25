@@ -22,7 +22,7 @@ aruco::MarkerDetector mDetector;
 /// markerSize is the size of the marker in real world in meters.
 //float markerSize = 0.0258; // Lieber Felix. Komm bitte nicht nochmal auf die Idee diesen Wert anzupassen, außer du druckst neue Marker! gez. Felix
 float markerSize = 0.0240;
-float markerSizeSmall = 0.0120;
+float markerSizeSmall = 0.0144;
 
 @interface OpenCVWrapper()
 @property NSOperationQueue* queue;
@@ -103,14 +103,14 @@ float markerSizeSmall = 0.0120;
         int i = 0;
         
         for(it = allMarkers.begin(); it != allMarkers.end(); it++,i++) {
-            if (it->id < 1 || it->id > 20 || (it->id > 9 && it->id < 14)) {
+            if (it->id < 1 || it->id > 20) {
                 continue;
             }
             markers.push_back(*it);
         }
         
         for(it = allMarkersSmall.begin(); it != allMarkersSmall.end(); it++,i++) {
-            if (it->id < 9 || it->id > 14) {
+            if (it->id < 21 || it->id > 26) {
                 continue;
             }
             markersSmall.push_back(*it);
