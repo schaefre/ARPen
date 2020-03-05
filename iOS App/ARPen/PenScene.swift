@@ -105,4 +105,8 @@ class PenScene: SCNScene {
         self.rootNode.addChildNode(self.drawingNode)
     }
     
+    func setPencilPointColor(r :CGFloat, g :CGFloat, b :CGFloat, a: CGFloat){
+        self.pencilPoint.geometry?.materials.first?.diffuse.contents = UIColor.init(red: r, green: g, blue: b, alpha: a)
+    }
+    
 }
