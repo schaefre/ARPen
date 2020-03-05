@@ -29,6 +29,10 @@ class MarkerTopPlugin: Plugin, UserStudyRecordPluginProtocol {
     private var currentLine : [SCNNode]?
     private var removedOneLine = false
     
+    private var started :Bool = false
+    private var firstInit :Bool = true
+    private var stopped :Bool = false
+    private var startingMillis :Int64 = 0
     
     override init() {
         super.init()
@@ -54,6 +58,53 @@ class MarkerTopPlugin: Plugin, UserStudyRecordPluginProtocol {
     }
     
     override func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
+        guard self.recordManager != nil else {return}
+        
+        let startStop = buttons[Button.Button3]!
+        
+        if (!started && startStop){
+            self.started = true
+            self.startingMillis = Date().millisecondsSince1970
+            print("started")
+        }
+        
+        if(!self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 1000){
+            print("stopped")
+            self.stopped = true
+            scene.setPencilPointColor(r: 0.12157, g: 0.8, b: 0.12157, a: 1)
+            self.recordManager.addNewRecord(withIdentifier: String(describing: type(of: self)), andData: [
+            "timestamp" : "\(Date().millisecondsSince1970)",
+            "penVisible" : scene.markerFound ? "true" : "false",
+            "penX" : "\(scene.pencilPoint.worldPosition.x)",
+            "penY" : "\(scene.pencilPoint.worldPosition.y)",
+            "penZ" : "\(scene.pencilPoint.worldPosition.z)",
+            "deleteButtonActive" : buttons[Button.Button2]! ? "true" : "false",
+            "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
+            "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
+            ])
+        }
+        
+        if (self.recordManager.currentActiveUserID != nil && self.started && !self.stopped) {
+            if(self.firstInit){
+                scene.setPencilPointColor(r: 0.73, g: 0.12157, b: 0.8, a: 1)
+                self.firstInit = false
+                print("recording")
+            }
+                self.recordManager.addNewRecord(withIdentifier: String(describing: type(of: self)), andData: [
+                    "timestamp" : "\(Date().millisecondsSince1970)",
+                    "penVisible" : scene.markerFound ? "true" : "false",
+                    "penX" : "\(scene.pencilPoint.worldPosition.x)",
+                    "penY" : "\(scene.pencilPoint.worldPosition.y)",
+                    "penZ" : "\(scene.pencilPoint.worldPosition.z)",
+                    "deleteButtonActive" : buttons[Button.Button2]! ? "true" : "false",
+                    "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
+                    "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
+                    ])
+        } else {
+            // for review testing disable the need to log information
+            return
+        }
+        
         guard scene.markerFound else {
             //Don't reset the previous point to avoid disconnected lines if the marker detection failed for some frames
             //self.previousPoint = nil
@@ -100,5 +151,9 @@ class MarkerTopPlugin: Plugin, UserStudyRecordPluginProtocol {
         scene.markerBox.setModel(newmodel: Model.top)
         scene.markerBox.calculatePenTip(length: 0.140)
         previousDrawnLineNodes = [[SCNNode]]()
+        scene.setPencilPointColor(r: 0.8, g: 0.73, b: 0.12157, a: 1)
+        self.started = false
+        self.firstInit = true
+        self.stopped = false
     }
 }

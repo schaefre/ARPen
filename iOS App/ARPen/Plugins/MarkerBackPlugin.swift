@@ -68,7 +68,7 @@ class MarkerBackPlugin: Plugin, UserStudyRecordPluginProtocol {
             print("started")
         }
         
-        if(!self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 2000){
+        if(!self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 1000){
             print("stopped")
             self.stopped = true
             scene.setPencilPointColor(r: 0.12157, g: 0.8, b: 0.12157, a: 1)
