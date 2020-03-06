@@ -60,6 +60,11 @@ class MarkerTopFrontPlugin: Plugin, UserStudyRecordPluginProtocol {
     override func didUpdateFrame(scene: PenScene, buttons: [Button : Bool]) {
         guard self.recordManager != nil else {return}
         
+        if(self.recordManager.currentActiveUserID == nil){
+            scene.setPencilPointColor(r: 1, g: 0, b: 0, a: 1)
+            return
+        }
+        
         let startStop = buttons[Button.Button3]!
         
         if (!started && startStop){
@@ -84,7 +89,7 @@ class MarkerTopFrontPlugin: Plugin, UserStudyRecordPluginProtocol {
             ])
         }
         
-        if (self.recordManager.currentActiveUserID != nil && self.started && !self.stopped) {
+        if (self.started && !self.stopped) {
             if(self.firstInit){
                 scene.setPencilPointColor(r: 0.73, g: 0.12157, b: 0.8, a: 1)
                 self.firstInit = false
