@@ -134,18 +134,6 @@ class MarkerBackPlugin: Plugin, UserStudyRecordPluginProtocol {
             }
         }
         
-        let pressed2 = buttons[Button.Button2]!
-        if pressed2, !removedOneLine, let lastLine = self.previousDrawnLineNodes?.last {
-            removedOneLine = true
-            self.previousDrawnLineNodes?.removeLast()
-            //undo last performed line if this is pressed
-            for currentNode in lastLine {
-                currentNode.removeFromParentNode()
-            }
-        } else if !pressed2, removedOneLine {
-            removedOneLine = false
-        }
-        
         self.previousPoint = scene.pencilPoint.position
         
     }
