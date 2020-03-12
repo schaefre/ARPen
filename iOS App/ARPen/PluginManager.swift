@@ -28,6 +28,7 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
     var activePlugin: Plugin?
     var delegate: PluginManagerDelegate?
     var experimentalPluginsStartAtIndex: Int
+    var allowPluginChange = true
     
     /**
      inits every plugin
@@ -62,6 +63,14 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
         if let buttonPressed = notification.userInfo?["buttonPressed"] as? Button, let buttonState = notification.userInfo?["buttonState"] as? Bool {
             self.buttons[buttonPressed] = buttonState
         }
+    }
+    
+    func pluginsLocked() -> Bool{
+        return !self.allowPluginChange
+    }
+    
+    func setPluginsLocked(locked: Bool){
+        self.allowPluginChange = !locked
     }
     
     /**

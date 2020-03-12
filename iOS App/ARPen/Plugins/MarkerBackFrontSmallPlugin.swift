@@ -71,6 +71,8 @@ class MarkerBackFrontSmallPlugin: Plugin, UserStudyRecordPluginProtocol {
             self.started = true
             self.startingMillis = Date().millisecondsSince1970
             print("started")
+            recordManager.setPluginsLocked(locked: true)
+            print("lock plugins")
         }
         
         if(!self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 1000){
@@ -87,6 +89,8 @@ class MarkerBackFrontSmallPlugin: Plugin, UserStudyRecordPluginProtocol {
             "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
             "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
             ])
+            recordManager.setPluginsLocked(locked: false)
+            print("unlock plugins")
         }
         
         if (self.started && !self.stopped) {

@@ -30,6 +30,16 @@ class UserStudyRecordManager : NSObject{
         userStudyData = loadFromFile() ?? [:]
     }
     
+    var allowPluginChange = true
+    
+    func pluginsLocked() -> Bool{
+        return !self.allowPluginChange
+    }
+    
+    func setPluginsLocked(locked: Bool){
+        self.allowPluginChange = !locked
+    }
+    
     //accessing userStudyData
     func getCurrentUserStudyData() -> [Int:[UserStudyRecord]] {
         return userStudyData

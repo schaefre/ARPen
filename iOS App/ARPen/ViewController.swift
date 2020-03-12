@@ -197,6 +197,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     }
      
     @objc func pluginButtonPressed(sender: UIButton!){
+        if(userStudyRecordManager.pluginsLocked()){
+            return
+        }
         let pluginID = sender.tag
         activatePlugin(withID: pluginID)
         
