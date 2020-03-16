@@ -85,6 +85,9 @@ class MarkerTopFrontPlugin: Plugin, UserStudyRecordPluginProtocol {
             "penX" : "\(scene.pencilPoint.worldPosition.x)",
             "penY" : "\(scene.pencilPoint.worldPosition.y)",
             "penZ" : "\(scene.pencilPoint.worldPosition.z)",
+            "penXRotation" : "\(scene.pencilPoint.rotation.x)",
+            "penYRotation" : "\(scene.pencilPoint.rotation.y)",
+            "penZRotation" : "\(scene.pencilPoint.rotation.z)",
             "deleteButtonActive" : buttons[Button.Button2]! ? "true" : "false",
             "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
             "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
@@ -105,6 +108,9 @@ class MarkerTopFrontPlugin: Plugin, UserStudyRecordPluginProtocol {
                     "penX" : "\(scene.pencilPoint.worldPosition.x)",
                     "penY" : "\(scene.pencilPoint.worldPosition.y)",
                     "penZ" : "\(scene.pencilPoint.worldPosition.z)",
+                    "penXRotation" : "\(scene.pencilPoint.rotation.x)",
+                    "penYRotation" : "\(scene.pencilPoint.rotation.y)",
+                    "penZRotation" : "\(scene.pencilPoint.rotation.z)",
                     "deleteButtonActive" : buttons[Button.Button2]! ? "true" : "false",
                     "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
                     "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
