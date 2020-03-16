@@ -94,7 +94,6 @@ class MarkerFrontPlugin: Plugin, UserStudyRecordPluginProtocol {
             ])
             recordManager.setPluginsLocked(locked: false)
             print("unlock plugins")
-            scene.pencilPoint.rotation
         }
         
         if (self.started && !self.stopped) {
