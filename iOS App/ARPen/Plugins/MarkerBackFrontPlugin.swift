@@ -92,6 +92,11 @@ class MarkerBackFrontPlugin: Plugin, UserStudyRecordPluginProtocol {
             "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
             "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
             ])
+            if let path = recordManager.urlToCSV() {
+                print("Stored csv to " + path.absoluteString)
+            } else {
+                print("Error creating the csv!")
+            }
             recordManager.setPluginsLocked(locked: false)
             print("unlock plugins")
         }
