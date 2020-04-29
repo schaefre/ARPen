@@ -155,6 +155,9 @@ class MarkerTopPlugin: Plugin, UserStudyRecordPluginProtocol {
         scene.markerBox.calculatePenTip(length: 0.140)
         previousDrawnLineNodes = [[SCNNode]]()
         scene.setPencilPointColor(r: 0.8, g: 0.73, b: 0.12157, a: 1)
+        scene.drawingNode.enumerateChildNodes {(node, pointer) in
+            node.removeFromParentNode()
+        }
         self.started = false
         self.firstInit = true
         self.stopped = false
