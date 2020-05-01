@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FC73C38245C21E300BB0E44 /* MarkerPlacementPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC73C37245C21E300BB0E44 /* MarkerPlacementPlugin.swift */; };
 		4A27E27D239FCEA800C4BF75 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E27C239FCEA800C4BF75 /* NotificationName.swift */; };
 		4A27E27F239FF36D00C4BF75 /* PassthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E27E239FF36D00C4BF75 /* PassthroughView.swift */; };
 		4A27E28123A0F9E300C4BF75 /* CubeByExtractionPlugin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A27E28023A0F9E300C4BF75 /* CubeByExtractionPlugin.xib */; };
@@ -113,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3FC73C37245C21E300BB0E44 /* MarkerPlacementPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPlacementPlugin.swift; sourceTree = "<group>"; };
 		4A27E27C239FCEA800C4BF75 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		4A27E27E239FF36D00C4BF75 /* PassthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughView.swift; sourceTree = "<group>"; };
 		4A27E28023A0F9E300C4BF75 /* CubeByExtractionPlugin.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CubeByExtractionPlugin.xib; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 			children = (
 				DC28B460200E46DC008B77AB /* Plugin.swift */,
 				DC28B466200E4BF1008B77AB /* PaintPlugin.swift */,
+				3FC73C37245C21E300BB0E44 /* MarkerPlacementPlugin.swift */,
 				8DC5F13D23F2F4E30096F395 /* MarkerBackPlugin.swift */,
 				8DC5F13F23F301200096F395 /* MarkerFrontPlugin.swift */,
 				8DC5F14123F304800096F395 /* MarkerTopPlugin.swift */,
@@ -602,6 +605,7 @@
 				4A56953920581B6700C8065E /* UserStudyRecordManager.swift in Sources */,
 				4AAC4AF123A24A20003B6E83 /* ARPPath.swift in Sources */,
 				4AAC4B2B23A37D17003B6E83 /* CombinePluginSolidHole.swift in Sources */,
+				3FC73C38245C21E300BB0E44 /* MarkerPlacementPlugin.swift in Sources */,
 				4AAC4B1323A24C2A003B6E83 /* DateExtensions.swift in Sources */,
 				DC28B465200E4825008B77AB /* PenScene.swift in Sources */,
 				4AC711C9204FDCE800CD4239 /* BluetoothDeviceListTableViewController.swift in Sources */,
