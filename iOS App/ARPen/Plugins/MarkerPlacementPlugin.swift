@@ -300,10 +300,10 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             
             scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][0]])
             scene.markerBox.calculatePenTip(length: 0.140)
-            self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
             
             activateTraining()
             currentIteration = 0
+            self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][0]])"
             
             recordManager.setPluginsLocked(locked: true)
             print("Lock plugins")
