@@ -34,6 +34,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
     private var stopped :Bool = false
     private var startingMillis :Int64 = 0
     private var stoppingMillis :Int64 = 0
+    private var resetMillis :Int64 = 0
     
     private var placements = [Model.back, Model.front, Model.top, Model.backfront, Model.backtop, Model.topfront, Model.small]
     
@@ -69,7 +70,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         }
     }
     
-    func activateTraining(withScene scene: PenScene){
+    func activateTraining(){
         self.training = true
         self.stopped = false
     }
@@ -94,8 +95,31 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             scene.markerBox.calculatePenTip(length: 0.140)
             
             //activate training
-            activateTraining(withScene: scene)
+            activateTraining()
         }
+    }
+    
+    func resetTrial(withScene scene: PenScene){
+        print("Reset to last training")
+        if(self.training || self.finished){
+            self.finished = false
+            recordManager.setPluginsLocked(locked: true)
+            print("Lock plugins")
+            //go back to last training
+            if(currentIteration > 0){
+                currentIteration -= 1
+                scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][currentIteration]])
+                scene.markerBox.calculatePenTip(length: 0.140)
+            }
+        }
+        //go back to current training
+        activateTraining()
+        self.started = true
+        self.startingMillis = Date().millisecondsSince1970
+        scene.setPencilPointColor(r: 0.0, g: 0.0, b: 1.0, a: 1)
+        clearScene(withScene: scene)
+        print("Started training with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
+        self.resetMillis = 0
     }
     
     func undoPreviousAction() {
@@ -117,6 +141,20 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         if(self.recordManager.currentActiveUserID == nil){
             scene.setPencilPointColor(r: 1, g: 0, b: 0, a: 1)
             return
+        }
+        
+        let reset = buttons[Button.Button2]!
+        
+        if(reset){
+            if(self.resetMillis > 0){
+                if((Date().millisecondsSince1970 - self.resetMillis) > 3000){
+                    resetTrial(withScene: scene)
+                }
+            } else {
+                self.resetMillis = Date().millisecondsSince1970
+            }
+        } else {
+            self.resetMillis = 0
         }
         
         if(self.finished){
@@ -145,7 +183,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                 self.training = false
                 self.started = false
                 self.firstInit = true
-                scene.setPencilPointColor(r: 0.8, g: 0.73, b: 0.12157, a: 1)
+                scene.setPencilPointColor(r: 0.8, g: 0.4, b: 0.12157, a: 1)
                 clearScene(withScene: scene)
                 print("Finished training with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
                 
@@ -250,11 +288,11 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][0]])
             scene.markerBox.calculatePenTip(length: 0.140)
             
-            activateTraining(withScene: scene)
+            activateTraining()
             currentIteration = 0
             
             recordManager.setPluginsLocked(locked: true)
-            print("lock plugins")
+            print("Lock plugins")
         }
     }
 }
