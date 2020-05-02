@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3FC73C38245C21E300BB0E44 /* MarkerPlacementPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC73C37245C21E300BB0E44 /* MarkerPlacementPlugin.swift */; };
+		3FDACCA3245D84410079152C /* MarkerPlacement.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FDACCA2245D84410079152C /* MarkerPlacement.xib */; };
 		4A27E27D239FCEA800C4BF75 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E27C239FCEA800C4BF75 /* NotificationName.swift */; };
 		4A27E27F239FF36D00C4BF75 /* PassthroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A27E27E239FF36D00C4BF75 /* PassthroughView.swift */; };
 		4A27E28123A0F9E300C4BF75 /* CubeByExtractionPlugin.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A27E28023A0F9E300C4BF75 /* CubeByExtractionPlugin.xib */; };
@@ -115,6 +116,7 @@
 
 /* Begin PBXFileReference section */
 		3FC73C37245C21E300BB0E44 /* MarkerPlacementPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPlacementPlugin.swift; sourceTree = "<group>"; };
+		3FDACCA2245D84410079152C /* MarkerPlacement.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkerPlacement.xib; sourceTree = "<group>"; };
 		4A27E27C239FCEA800C4BF75 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		4A27E27E239FF36D00C4BF75 /* PassthroughView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassthroughView.swift; sourceTree = "<group>"; };
 		4A27E28023A0F9E300C4BF75 /* CubeByExtractionPlugin.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CubeByExtractionPlugin.xib; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			children = (
 				4A27E28023A0F9E300C4BF75 /* CubeByExtractionPlugin.xib */,
 				4AAC4B1823A27FC4003B6E83 /* AllButtonsAndUndo.xib */,
+				3FDACCA2245D84410079152C /* MarkerPlacement.xib */,
 			);
 			path = PluginUIs;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				DC28B442200E4353008B77AB /* art.scnassets in Resources */,
 				4A27E28123A0F9E300C4BF75 /* CubeByExtractionPlugin.xib in Resources */,
 				DC28B44C200E4353008B77AB /* LaunchScreen.storyboard in Resources */,
+				3FDACCA3245D84410079152C /* MarkerPlacement.xib in Resources */,
 				DC28B449200E4353008B77AB /* Assets.xcassets in Resources */,
 				4AAC4B1923A27FC4003B6E83 /* AllButtonsAndUndo.xib in Resources */,
 				DC28B447200E4353008B77AB /* Main.storyboard in Resources */,

@@ -53,6 +53,8 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         [4, 6, 0, 3, 2, 5, 1],
     ]
     
+    @IBOutlet weak var placementLabel: UILabel!
+    
     override init() {
         super.init()
     
@@ -61,6 +63,8 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         self.pluginIdentifier = "Placements"
         self.needsBluetoothARPen = false
         self.pluginDisabledImage = UIImage.init(named: "MarkerPlacementPluginDisabled")
+        
+        nibNameOfCustomUIView = "MarkerPlacement"
     }
     
     func clearScene(withScene scene: PenScene){
@@ -90,9 +94,15 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             recordManager.setPluginsLocked(locked: false)
             print("Unlock plugins")
             print("Finished")
+            DispatchQueue.main.async {
+                self.placementLabel.text = "Finished"
+            }
         } else {
             scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][currentIteration]])
             scene.markerBox.calculatePenTip(length: 0.140)
+            DispatchQueue.main.async {
+                self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
+            }
             
             //activate training
             activateTraining()
@@ -110,6 +120,9 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                 currentIteration -= 1
                 scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][currentIteration]])
                 scene.markerBox.calculatePenTip(length: 0.140)
+                DispatchQueue.main.async {
+                    self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
+                }
             }
         }
         //go back to current training
@@ -287,6 +300,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             
             scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][0]])
             scene.markerBox.calculatePenTip(length: 0.140)
+            self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
             
             activateTraining()
             currentIteration = 0
