@@ -12,6 +12,12 @@ protocol PluginManagerDelegate {
     func arKitInitialiazed()
     func penConnected()
     func penFailed()
+    
+    //used for MarkerPlacementPlugin
+    func hideSettings()
+    func showSettings()
+    func hidePlugins()
+    func showPlugins()
 }
 
 /**
@@ -37,7 +43,9 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
         self.paintPlugin = PaintPlugin()
         //self.plugins = [paintPlugin, MarkerBackPlugin(), CubeByDraggingPlugin(), SphereByDraggingPlugin(), CylinderByDraggingPlugin(), PyramidByDraggingPlugin(), CubeByExtractionPlugin(), ARMenusPlugin(), TranslationDemoPlugin(), CombinationPlugin(), ModelingPlugin(), SweepPluginProfileAndPath(), SweepPluginTwoProfiles(), LoftPlugin(), RevolvePluginProfileAndAxis(), RevolvePluginProfileAndCircle(), RevolvePluginTwoProfiles(), CombinePluginFunction(), CombinePluginSolidHole()]
         //self.plugins = [paintPlugin, MarkerPlacementPlugin(), MarkerBackPlugin(), MarkerFrontPlugin(), MarkerTopPlugin(), MarkerBackFrontPlugin(), MarkerBackTopPlugin(), MarkerTopFrontPlugin(), MarkerBackFrontSmallPlugin()]
-        self.plugins = [paintPlugin, MarkerPlacementPlugin()]
+        let markerPlacementPlugin = MarkerPlacementPlugin()
+        
+        self.plugins = [paintPlugin, markerPlacementPlugin]
         self.pluginInstructionsCanBeHidden = Array(repeating: true, count: self.plugins.count)
         self.experimentalPluginsStartAtIndex = 0
         
@@ -47,6 +55,7 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
         self.activePlugin = plugins.first
         self.arManager.delegate = self
         self.arPenManager.delegate = self
+        markerPlacementPlugin.delegate = self
         
         //listen to softwarePenButton notifications
         NotificationCenter.default.addObserver(self, selector: #selector(self.softwareButtonEvent(_:)), name: .softwarePenButtonEvent, object: nil)
@@ -110,4 +119,24 @@ class PluginManager: ARManagerDelegate, PenManagerDelegate {
         // Todo: Add undo functionality for all plugins.
         self.paintPlugin.undoPreviousAction()
     }
+}
+
+extension PluginManager: MarkerPlacementPluginDelegate {
+    func hideSettings() {
+        self.delegate?.hideSettings()
+    }
+    
+    func showSettings() {
+        self.delegate?.showSettings()
+    }
+    
+    func showPlugins() {
+        self.delegate?.showPlugins()
+    }
+    
+    func hidePlugins() {
+        self.delegate?.hidePlugins()
+    }
+    
+    
 }

@@ -44,7 +44,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     //Manager for user study data
     let userStudyRecordManager = UserStudyRecordManager()
     
-    
     /**
      A quite standard viewDidLoad
      */
@@ -215,7 +214,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
             displayPluginInstructions(forPluginID: pluginID)
         } else {
             self.imageForPluginInstructions.isHidden = true
-            self.pluginInstructionsLookupButton.isHidden = false
+            //Removed to keep hiding the button for the MarkerPlacementPlugin
+            //self.pluginInstructionsLookupButton.isHidden = false
         }
         
     }
@@ -314,6 +314,27 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         
     }
     
+    func hideSettings() {
+        print("Hiding Settings")
+        self.settingsButton.isHidden = true
+    }
+    
+    func showSettings() {
+        print("Showing Settings")
+        self.settingsButton.isHidden = false
+    }
+    
+    func hidePlugins() {
+        print("Hiding Plugins")
+        self.pluginMenuScrollView.isHidden = true
+        self.pluginInstructionsLookupButton.isHidden = true
+    }
+    
+    func showPlugins() {
+        print("Showing Plugins")
+        self.pluginMenuScrollView.isHidden = false
+        self.pluginInstructionsLookupButton.isHidden = false
+    }
     
     // Mark: - ARManager Delegate
     /**

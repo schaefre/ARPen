@@ -9,6 +9,13 @@
 import Foundation
 import ARKit
 
+protocol MarkerPlacementPluginDelegate {
+    func hideSettings()
+    func showSettings()
+    func hidePlugins()
+    func showPlugins()
+}
+
 //include the UserStudyRecordPluginProtocol to demo recording of user study data
 class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
     //reference to userStudyRecordManager to add new records
@@ -52,6 +59,8 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         [5, 3, 2, 6, 1, 0, 4],
         [4, 6, 0, 3, 2, 5, 1],
     ]
+    
+    var delegate: MarkerPlacementPluginDelegate?
     
     @IBOutlet weak var placementLabel: UILabel!
     @IBOutlet weak var instructLabel: UILabel!
@@ -100,17 +109,14 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                 self.placementLabel.text = "Finished"
                 self.instructLabel.text = "Thank you!"
                 self.headingLabel.text = "Finished"
+                self.delegate?.showPlugins()
             }
         } else {
             scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][currentIteration]])
             scene.markerBox.calculatePenTip(length: 0.140)
             DispatchQueue.main.async {
                 self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
-            }
-            DispatchQueue.main.async {
                 self.instructLabel.text = "Needed Pen: \(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
-            }
-            DispatchQueue.main.async {
                 self.headingLabel.text = "Next: Training"
             }
             //activate training
@@ -144,6 +150,8 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         DispatchQueue.main.async {
             self.headingLabel.text = "Training with: \(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
             self.instructLabel.text = ""
+            self.delegate?.showSettings()
+            self.delegate?.hidePlugins()
         }
         self.resetMillis = 0
     }
@@ -204,6 +212,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                 print("Started trial with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
                 DispatchQueue.main.async {
                     self.headingLabel.text = ""
+                    self.delegate?.hideSettings()
                 }
             }
             DispatchQueue.main.async {
@@ -246,6 +255,9 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                 ])
                 
                 print("Finished trial with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
+                DispatchQueue.main.async {
+                    self.delegate?.showSettings()
+                }
                 prepareNextPen(withScene: scene)
             }
         }
@@ -334,8 +346,8 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
 
             self.headingLabel.text = "Next: Training"
 
-            
             recordManager.setPluginsLocked(locked: true)
+            self.delegate?.hidePlugins()
             print("Lock plugins")
         } else {
             self.instructLabel.text = "User ID missing!"
