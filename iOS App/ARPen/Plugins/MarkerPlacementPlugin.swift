@@ -54,6 +54,8 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
     ]
     
     @IBOutlet weak var placementLabel: UILabel!
+    @IBOutlet weak var instructLabel: UILabel!
+    @IBOutlet weak var headingLabel: UILabel!
     
     override init() {
         super.init()
@@ -96,6 +98,8 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             print("Finished")
             DispatchQueue.main.async {
                 self.placementLabel.text = "Finished"
+                self.instructLabel.text = "Thank you!"
+                self.headingLabel.text = "Finished"
             }
         } else {
             scene.markerBox.setModel(newmodel: placements[latinSquare[latinSquareID][currentIteration]])
@@ -103,7 +107,12 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             DispatchQueue.main.async {
                 self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
             }
-            
+            DispatchQueue.main.async {
+                self.instructLabel.text = "Needed Pen: \(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
+            }
+            DispatchQueue.main.async {
+                self.headingLabel.text = "Next: Training"
+            }
             //activate training
             activateTraining()
         }
@@ -132,6 +141,10 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         scene.setPencilPointColor(r: 0.0, g: 0.0, b: 1.0, a: 1)
         clearScene(withScene: scene)
         print("Started training with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
+        DispatchQueue.main.async {
+            self.headingLabel.text = "Training with: \(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
+            self.instructLabel.text = ""
+        }
         self.resetMillis = 0
     }
     
@@ -177,19 +190,28 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         
         let startStop = buttons[Button.Button3]!
         
-        if (!self.started && startStop && (Date().millisecondsSince1970 - self.stoppingMillis) > 2000){
+        if (!self.started && startStop && (Date().millisecondsSince1970 - self.stoppingMillis) > 1500){
             self.started = true
             self.startingMillis = Date().millisecondsSince1970
             if(training){
                 scene.setPencilPointColor(r: 0.0, g: 0.0, b: 1.0, a: 1)
                 clearScene(withScene: scene)
                 print("Started training with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
+                DispatchQueue.main.async {
+                    self.headingLabel.text = "Training with: \(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
+                }
             } else {
                 print("Started trial with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
+                DispatchQueue.main.async {
+                    self.headingLabel.text = ""
+                }
+            }
+            DispatchQueue.main.async {
+                self.instructLabel.text = ""
             }
         }
     
-        if(self.started && !self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 2000){
+        if(self.started && !self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 1500){
             self.stoppingMillis = Date().millisecondsSince1970
             if(self.training){
                 self.stopped = false //it stays false because now the real trial can begin
@@ -199,7 +221,10 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                 scene.setPencilPointColor(r: 0.8, g: 0.4, b: 0.12157, a: 1)
                 clearScene(withScene: scene)
                 print("Finished training with pen \(placements[latinSquare[latinSquareID][currentIteration]])")
-                
+                DispatchQueue.main.async {
+                    self.instructLabel.text = "Press the Continue Button to start the Trial"
+                    self.headingLabel.text = ""
+                }
             } else {
                 self.stopped = true
                 self.started = false
@@ -215,7 +240,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                 "penXRotation" : "\(scene.pencilPoint.rotation.x)",
                 "penYRotation" : "\(scene.pencilPoint.rotation.y)",
                 "penZRotation" : "\(scene.pencilPoint.rotation.z)",
-                "deleteButtonActive" : buttons[Button.Button2]! ? "true" : "false",
+                "resetButtonActive" : buttons[Button.Button2]! ? "true" : "false",
                 "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
                 "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
                 ])
@@ -242,7 +267,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
                         "penXRotation" : "\(scene.pencilPoint.rotation.x)",
                         "penYRotation" : "\(scene.pencilPoint.rotation.y)",
                         "penZRotation" : "\(scene.pencilPoint.rotation.z)",
-                        "deleteButtonActive" : buttons[Button.Button2]! ? "true" : "false",
+                        "resetButtonActive" : buttons[Button.Button2]! ? "true" : "false",
                         "lineButtonActive" : buttons[Button.Button1]! ? "true" : "false",
                         "startStopButtonActive" : buttons[Button.Button3]! ? "true" : "false"
                         ])
@@ -305,8 +330,15 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             currentIteration = 0
             self.placementLabel.text = "\(self.placements[self.latinSquare[self.latinSquareID][0]])"
             
+            self.instructLabel.text = "Needed Pen: \(self.placements[self.latinSquare[self.latinSquareID][self.currentIteration]])"
+
+            self.headingLabel.text = "Next: Training"
+
+            
             recordManager.setPluginsLocked(locked: true)
             print("Lock plugins")
+        } else {
+            self.instructLabel.text = "User ID missing!"
         }
     }
 }
