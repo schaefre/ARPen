@@ -87,6 +87,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
         self.imageForPluginInstructions.isHidden = true
         //self.displayPluginInstructions(forPluginID: currentActivePluginID)
         
+        // Create a session configuration
+        let configuration = ARWorldTrackingConfiguration()
+        
+        // Track image target
+        if let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) {
+            configuration.detectionImages = referenceImages
+        }
+        
         // set user study record manager reference in the app delegate (for saving state when leaving the app)
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.userStudyRecordManager = self.userStudyRecordManager
