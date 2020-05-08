@@ -198,7 +198,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
         
         let startStop = buttons[Button.Button3]!
         
-        if (!self.started && startStop && (Date().millisecondsSince1970 - self.stoppingMillis) > 1500){
+        if (!self.started && startStop && (Date().millisecondsSince1970 - self.stoppingMillis) > 1000){
             self.started = true
             self.startingMillis = Date().millisecondsSince1970
             if(training){
@@ -220,7 +220,7 @@ class MarkerPlacementPlugin: Plugin, UserStudyRecordPluginProtocol {
             }
         }
     
-        if(self.started && !self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 1500){
+        if(self.started && !self.stopped && startStop && (Date().millisecondsSince1970 - self.startingMillis) > 1000){
             self.stoppingMillis = Date().millisecondsSince1970
             if(self.training){
                 self.stopped = false //it stays false because now the real trial can begin

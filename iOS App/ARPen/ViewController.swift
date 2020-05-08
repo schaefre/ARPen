@@ -315,13 +315,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, PluginManagerDelegate
     }
     
     func hideSettings() {
-        print("Hiding Settings")
-        self.settingsButton.isHidden = true
+        print("Hiding Settings - Currently disabled")
+        //self.settingsButton.isHidden = true
     }
     
     func showSettings() {
-        print("Showing Settings")
-        self.settingsButton.isHidden = false
+        print("Showing Settings - Currently disabled")
+        //self.settingsButton.isHidden = false
     }
     
     func hidePlugins() {
